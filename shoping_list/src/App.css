@@ -1,0 +1,31 @@
+.navigation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  display: flex;
+  background-color: rgb(86, 182, 201);
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Lighten background on hover */
+}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.3); /* Highlight active link */
+  font-weight: bold; /* Make the text bold */
+}
