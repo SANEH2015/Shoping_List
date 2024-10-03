@@ -2,17 +2,17 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   items: [],
-  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: 'idle', 
   error: null,
 };
 
-// Async thunk to fetch items from JSON Server
+
 export const fetchItems = createAsyncThunk('shoppingList/fetchItems', async () => {
   const response = await fetch('http://localhost:3000/items');
   return await response.json();
 });
 
-// Async thunk to create a new item
+
 export const addItem = createAsyncThunk('shoppingList/addItem', async (item) => {
   const response = await fetch('http://localhost:3000/items', {
     method: 'POST',
@@ -24,7 +24,7 @@ export const addItem = createAsyncThunk('shoppingList/addItem', async (item) => 
   return await response.json();
 });
 
-// Async thunk to update an item
+
 export const updateItem = createAsyncThunk('shoppingList/updateItem', async (item) => {
   const response = await fetch(`http://localhost:3000/items/${item.id}`, {
     method: 'PUT',
@@ -36,7 +36,7 @@ export const updateItem = createAsyncThunk('shoppingList/updateItem', async (ite
   return await response.json();
 });
 
-// Async thunk to delete an item
+
 export const deleteItem = createAsyncThunk('shoppingList/deleteItem', async (id) => {
   await fetch(`http://localhost:3000/items/${id}`, {
     method: 'DELETE',
@@ -44,13 +44,11 @@ export const deleteItem = createAsyncThunk('shoppingList/deleteItem', async (id)
   return id;
 });
 
-// Shopping list slice
+
 const shoppingListSlice = createSlice({
   name: 'shoppingList',
   initialState,
-  reducers: {
-    // Add any synchronous reducers here
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchItems.fulfilled, (state, action) => {
@@ -71,5 +69,5 @@ const shoppingListSlice = createSlice({
       });
   },
 });
-
+export const {addCase} = shoppingListSlice.actions
 export default shoppingListSlice.reducer;
