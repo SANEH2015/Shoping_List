@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItems, addItem, updateItem, deleteItem } from '../Slices/ShopingListSlice';
+import { useNavigate,Link } from 'react-router-dom'; 
 
 const ItemForm = ({ newItem, setNewItem, onSubmit, editingItem }) => {
   return (
@@ -42,18 +43,27 @@ const ShoppingList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortCriteria, setSortCriteria] = useState('name');
 
+  const navigate = useNavigate(); // Add navigate hook
+
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
 
   const handleAdd = (e) => {
     e.preventDefault();
+
+    // Ensure quantity is a number before saving
+    const updatedItem = { ...newItem, quantity: parseInt(newItem.quantity, 10) };
+
     if (editingItem) {
-      dispatch(updateItem({ ...editingItem, ...newItem }));
-      setEditingItem(null);
+      // Update item
+      dispatch(updateItem({ ...editingItem, ...updatedItem }));
+      setEditingItem(null); // Clear the editing state after updating
     } else {
-      dispatch(addItem({ ...newItem, id: Date.now() }));
+      // Add new item
+      dispatch(addItem({ ...updatedItem, id: Date.now() }));
     }
+
     resetForm();
   };
 
@@ -63,12 +73,17 @@ const ShoppingList = () => {
 
   const handleEdit = (item) => {
     setEditingItem(item);
-    setNewItem({ name: item.name, quantity: item.quantity, notes: item.notes });
+    setNewItem({ name: item.name, quantity: item.quantity.toString(), notes: item.notes });
   };
 
   const handleDelete = (id) => {
     dispatch(deleteItem(id));
   };
+
+  const handleViewMore = (id) => {
+    navigate(`/ItemDetailPage/${id}`);  // Correct route path
+  };
+  
 
   const filteredItems = items
     .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -103,6 +118,9 @@ const ShoppingList = () => {
             <div style={styles.buttonContainer}>
               <button onClick={() => handleEdit(item)} style={styles.editButton}>Edit</button>
               <button onClick={() => handleDelete(item.id)} style={styles.deleteButton}>Delete</button>
+              {/* Add View More button */}
+              {/* <button onClick={() => handleViewMore(item.id)} style={styles.viewButton}>View More</button> */}
+          <Link to={`${item.id}`}>     <button style={styles.viewButton}>View More</button></Link>
             </div>
           </li>
         ))}
@@ -173,6 +191,14 @@ const styles = {
     fontWeight: 'bold',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
+  },
+  viewButton: {
+    padding: '8px',
+    borderRadius: '5px',
+    border: 'none',
+    backgroundColor: 'rgb(67, 155, 174)',
+    color: 'white',
+    cursor: 'pointer',
   },
   list: {
     listStyleType: 'none',

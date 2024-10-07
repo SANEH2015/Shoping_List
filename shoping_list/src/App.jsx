@@ -8,7 +8,7 @@ import Layout from './pages/Layout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ShoppingList from './component/ShopingList';
-
+import ItemDetailPage from './pages/ItemDetailPage';
 
 
 function App() {
@@ -22,8 +22,10 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
-          <Route path="/ShoppingList" element={<ShoppingList />} />
-
+          <Route path="ShoppingList"  >
+          <Route index element={<ShoppingList/>} />
+          <Route  path=":id" element={<ItemDetailPage/>}/>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
