@@ -1,42 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navigation from '../component/Navigation'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../Slices/LoginSlice';
+import Navigation from '../component/Navigation';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+
+  const { loading, isAuthenticated, error } = useSelector((state) => state.login);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-  
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const loginData = { email, password };
+    console.log(loginData);
+    dispatch(loginUser(loginData));
+  };
 
-
-    if (email && password) { 
+  useEffect(() => {
+    if (isAuthenticated) {
       alert('Login successful!');
       navigate('/ShoppingList');
-    } else {
-      alert('Invalid login credentials');
+    } else if (error) {
+      alert(`Login failed: ${error}`);
     }
-  };
+  }, [isAuthenticated, error, navigate]);
 
   return (
     <div style={styles.container}>
-    
       <div style={styles.formContainer}>
         <h2 style={styles.title}>Login</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Email:</label>
-            <input type="email" name="email" required style={styles.input} />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={styles.input}
+            />
           </div>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Password:</label>
-            <input type="password" name="password" required style={styles.input} />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={styles.input}
+            />
           </div>
-          <button type="submit" style={styles.button}>Login</button>
+          <button type="submit" style={styles.button} disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );

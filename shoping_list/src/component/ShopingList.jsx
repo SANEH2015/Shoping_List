@@ -180,12 +180,12 @@ const styles = {
     marginTop: '20px',
   },
   listItem: {
-    background: 'white',
-    padding: '15px',
-    margin: '10px 0',
-    border: '1px solid rgb(86, 182, 201)',
-    borderRadius: '5px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    width: '250px',
+    margin: '20px',
+    padding: '20px',
+    border: '1px solid #ddd',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   },
   itemName: {
     color: 'rgb(86, 182, 201)',

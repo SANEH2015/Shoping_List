@@ -1,38 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser, resetRegisterState } from '../Slices/RegisterSlice';
 import Navigation from '../component/Navigation';
 
-
 export default function RegisterPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, success, error } = useSelector((state) => state.register);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    alert('Registration submitted!'); 
-    navigate('/'); 
+    const userData = { name, email, password };
+    dispatch(registerUser(userData));
   };
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(resetRegisterState());
+    };
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    if (success) {
+      alert('Registration successful!');
+      navigate('/login'); // Navigate to the login page upon successful registration
+    } else if (error) {
+      alert(`Registration failed: ${error}`);
+    }
+  }, [success, error, navigate]);
 
   return (
     <div style={styles.container}>
-     
       <div style={styles.formContainer}>
         <h2 style={styles.title}>Register</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Name:</label>
-            <input type="text" required style={styles.input} />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              style={styles.input}
+            />
           </div>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Email:</label>
-            <input type="email" required style={styles.input} />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={styles.input}
+            />
           </div>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Password:</label>
-            <input type="password" required style={styles.input} />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={styles.input}
+            />
           </div>
-          <button type="submit" style={styles.button}>Register</button>
+          <button
+            type="submit"
+            style={styles.button}
+            disabled={loading}
+          >
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );
@@ -87,4 +133,3 @@ const styles = {
     transition: 'background-color 0.3s ease',
   },
 };
-
