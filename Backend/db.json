@@ -1,0 +1,62 @@
+{
+  "items": [
+    {
+      "id": "1728309349588",
+      "name": "books",
+      "quantity": 200,
+      "notes": "books i need to buy"
+    },
+    {
+      "id": 1728310618130,
+      "name": "new job",
+      "quantity": 2,
+      "notes": "cxsc"
+    }
+  ],
+  "users": [
+    {
+      "id": "23c6",
+      "name": "Sanele Mkhize",
+      "email": "mkhizes834@gmail.com",
+      "password": "sanele99"
+    },
+    {
+      "id": "c926",
+      "name": "asanda madondo",
+      "email": "asanda12@gmail.com",
+      "password": "asanda"
+    },
+    {
+      "id": "6c49",
+      "email": "mkhizes834@gmail.com",
+      "password": "sanele99"
+    },
+    {
+      "id": "2182",
+      "email": "thobeka11123@gmail.com",
+      "password": "124578"
+    },
+    {
+      "id": "86f1",
+      "name": "Nokwanda chonco",
+      "email": "nokwanda@gmail.com",
+      "password": "nokwanda"
+    },
+    {
+      "id": "b33e",
+      "email": "thobani@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "6a79",
+      "email": "thobeka11123@gmail.com",
+      "password": "124578"
+    },
+    {
+      "id": "5509",
+      "name": "Sanele Mkhize",
+      "email": "mkhizes834@gmail.com",
+      "password": "sanele99"
+    }
+  ]
+}
