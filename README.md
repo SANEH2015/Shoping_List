@@ -9,7 +9,8 @@ Clone the project
 ```
 Go to the project directory
 ```bash
-  cd Shoping-List
+  cd Shoping-List for frontend
+  cd Backend for Backend
 ```
 Install dependencies
 ```bash
